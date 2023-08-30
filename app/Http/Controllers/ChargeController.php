@@ -43,7 +43,7 @@ class ChargeController extends Controller{
         $msg = 'modificado';
         $action = 'update';
       }
-      logInfo($action, 'cargos', 'Cargo '.$data->id.' '.$msg.' correctamente',$dataOld,$data);
+
       DB::commit();
 
       return response()->json(['code' => 200, 'message' => 'Registro '.$msg.' correctamente', 'data' => $data]);
@@ -60,7 +60,7 @@ class ChargeController extends Controller{
       if( $data ){
         $dataNew = $this->chargeRepository->delete($id);
         $msg = 'Registro eliminado correctamente';
-        logInfo('delete', 'cargos', 'Cargo '.$data->id.' eliminado correctamente',$dataOld,$dataNew);
+
       }else{
         $msg = 'El registro no existe';
       }
@@ -105,7 +105,7 @@ class ChargeController extends Controller{
       $dataNew = $model = $this->chargeRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';
-      logInfo('changeState', 'cargos', 'Cargo '.$model->id.' '.$aReturn['msg'].' correctamente',$dataOld,$dataNew);
+
       DB::commit();
 
       $aReturn['msg'] .= $aReturn['msg'].' con éxito';

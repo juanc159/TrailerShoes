@@ -17,13 +17,13 @@ class UserSeeder extends Seeder{
     $role = Role::first();
     $identityType = IdentityType::first();
     $data = new User();
-    $data->name = 'NyGSoft';
-    $data->lastName = 'Soft';
-    $data->email = 'admin@nygsoft.com';
-    $data->idNumber = 'admin@nygsoft.com';
+    $data->name = 'admin';
+    $data->lastName = 'admin';
+    $data->email = 'admin@admin.com';
+    $data->idNumber = 'admin@admin.com';
     $data->identity_type_id = $identityType->id;
     $data->charge_id = null;
-    $data->password = Hash::make('admin@nygsoft.com');
+    $data->password = Hash::make('admin@admin.com');
     $data->role_id = $role->id;
     $data->save();
     $data->roles()->sync($data->role_id);

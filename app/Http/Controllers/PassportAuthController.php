@@ -50,7 +50,6 @@ class PassportAuthController extends Controller{
 
             auth()->attempt($data);
 
-            logInfo('register', 'usuario', 'Usuario '.$user->id.' registrado correctamente');
             DB::commit();
 
             return response()->json(['code' => 200, 'message' => 'Registro agregado correctamente', 'data' => $user]);
@@ -67,7 +66,6 @@ class PassportAuthController extends Controller{
             'email' => $request->email,
             'password' => $request->password,
         ];
-
         if (auth()->attempt($data)) {
             $user = Auth::user();
             $obj['id'] = $user->id;
@@ -82,6 +80,7 @@ class PassportAuthController extends Controller{
             $obj['identity_type_id'] = $user->identity_type_id;
             $obj['idNumber'] = $user->idNumber;
             $menu = $this->menuRepository->list(['typeData' => 'todos', 'permissions' => $user->all_permissions->pluck('name')], ['children']);
+
             foreach ($menu as $key => $value) {
                 $arrayMenu[$key]['title'] = $value->title;
                 $arrayMenu[$key]['to']['name'] = $value->to;
@@ -102,7 +101,6 @@ class PassportAuthController extends Controller{
                     }
                 }
             }
-            logInfo('login', 'usuario', 'Usuario '.$user->id.' logeado correctamente');
             $aCompany = $this->oCompanyRepository->find(1);
 
             return response()->json([
