@@ -58,8 +58,6 @@ class RoleController extends Controller
                 $action = 'update';
             }
 
-            logInfo($action, 'roles', 'Rol '.$data->id.' '.$msg.' correctamente',$dataNew,$data);
-
             return response()->json(['code' => 200, 'message' => 'Registro '.$msg.' correctamente', 'data' => $data]);
         } catch (Throwable $th) {
             DB::rollBack();
@@ -78,7 +76,6 @@ class RoleController extends Controller
             if ($data) {
                 $dataNew = $this->roleRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
-                logInfo('delete', 'roles', 'Rol '.$data->id.' eliminado correctamente',$dataOld,$dataNew);
             } else {
                 $msg = 'El registro no existe';
             }

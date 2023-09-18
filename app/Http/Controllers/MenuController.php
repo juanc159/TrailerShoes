@@ -45,7 +45,7 @@ class MenuController extends Controller
                 $action = 'update';
                 $msg = 'modificado';
             }
-            logInfo($action, 'menu', 'Menu '.$data->id.' '.$msg.' correctamente',$dataOld,$data);
+
             DB::commit();
 
             return response()->json(['code' => 200, 'message' => 'Registro '.$msg.' correctamente', 'data' => $data]);
@@ -66,7 +66,7 @@ class MenuController extends Controller
             if ($data) {
                 $dataNew = $this->companyRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
-                logInfo('delete', 'menu', 'Menu '.$data->id.' eliminado correctamente',$dataOld,$dataNew);
+
             } else {
                 $msg = 'El registro no existe';
             }

@@ -49,7 +49,7 @@ class CompanyController extends Controller
                 $action = 'create';
                 $aReturn['message'] = 'agregado';
             }
-            logInfo($action, 'company', 'Company ' . $data->id . ' ' . $aReturn['message'] . ' correctamente',$dataOld,$dataNew);
+
             DB::commit();
 
             $aCompany = $this->oCompanyRepository->find($request['id']);

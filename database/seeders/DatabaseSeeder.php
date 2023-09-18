@@ -18,13 +18,9 @@ class DatabaseSeeder extends Seeder
             CivilStatusSeeder::class,
             IdentityTypeSeeder::class,
             PermissionSeeder::class,
-            PermissionSeederUpdate20230811::class,
             RoleSeeder::class,
             MenuSeeder::class,
             UserSeeder::class,
-            RequirementStateSeeder::class,
-            CalendarTypeSeeder::class,
-            MenuSeederUpdate20230811::class,
             CompanySeeder::class,
         ]);
     }

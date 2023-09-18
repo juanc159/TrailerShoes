@@ -76,7 +76,6 @@ class Usercontroller extends Controller
                 $msg = 'modificado';
                 $action = 'update';
             }
-            logInfo($action, 'Usuarios', 'Usuario ' . $data->id . ' ' . $msg . ' correctamente',$dataOld,$data);
 
             return response()->json(['code' => 200, 'message' => 'Registro ' . $msg . ' correctamente', 'data' => $data]);
         } catch (Exception $th) {
@@ -94,7 +93,7 @@ class Usercontroller extends Controller
             if ($data) {
                 $dataNew = $this->userRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
-                logInfo('delete', 'Usuarios', 'Usuario ' . $data->id . ' eliminado correctamente',$dataOld,$dataNew);
+
             } else {
                 $msg = 'El registro no existe';
             }
@@ -159,7 +158,6 @@ class Usercontroller extends Controller
             $model = $this->userRepository->changeState($request->input('id'), $request->input('state'), 'state');
 
             ($model->state == 1) ? $msg = 'Activado' : $msg = 'Inactivado';
-            logInfo('cahngeState', 'Usuarios', 'Usuario ' . $model->id . ' ' . $msg . ' correctamente',$dataOld,$model);
             DB::commit();
 
             return response()->json(['code' => 200, 'msg' => $msg . ' con éxito']);

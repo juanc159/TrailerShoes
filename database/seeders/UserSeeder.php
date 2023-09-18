@@ -23,7 +23,7 @@ class UserSeeder extends Seeder{
     $data->idNumber = 'admin@admin.com';
     $data->identity_type_id = $identityType->id;
     $data->charge_id = null;
-    $data->password = Hash::make('123456789');
+    $data->password = Hash::make('admin@admin.com');
     $data->role_id = $role->id;
     $data->save();
     $data->roles()->sync($data->role_id);

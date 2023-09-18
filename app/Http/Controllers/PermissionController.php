@@ -51,7 +51,6 @@ class PermissionController extends Controller
                 $action = 'update';
                 $msg = 'modificado';
             }
-            logInfo($action, 'permisos', 'Permiso '.$data->id.' '.$msg.' correctamente',$dataOld,$data);
 
             return response()->json(['code' => 200, 'message' => 'Registro '.$msg.' correctamente', 'data' => $data]);
         } catch (Exception $th) {
@@ -71,7 +70,6 @@ class PermissionController extends Controller
             if ($data) {
                 $dataNew = $this->permissionRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
-                logInfo('delete', 'permisos', 'Permiso '.$data->id.' eliminado correctamente',$dataOld,$dataNew);
             } else {
                 $msg = 'El registro no existe';
             }
