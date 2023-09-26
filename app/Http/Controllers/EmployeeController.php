@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Loan\LoanStoreRequest;
-use App\Http\Resources\Loan\LoanListResource;
-use App\Repositories\LoanRepository;
+use App\Http\Requests\Employee\EmployeeStoreRequest;
+use App\Http\Resources\Employee\EmployeeListResource;
+use App\Http\Resources\Employee\EmployeeListSelect2Resource;
+use App\Repositories\EmployeeRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class LoanController extends Controller{
+class EmployeeController extends Controller{
 
-  private $loanRepository;
+  private $employedRepository;
 
-  public function __construct(LoanRepository $loanRepository){
-    $this->loanRepository = $loanRepository;
+  public function __construct(EmployeeRepository $employedRepository){
+    $this->employedRepository = $employedRepository;
   }
 
   public function list(Request $request){
-    $data = $this->loanRepository->list($request->all());
-    $loans = LoanListResource::collection($data);
+    $data = $this->employedRepository->list($request->all());
+    $employees = EmployeeListResource::collection($data);
 
     return [
-      'loans' => $loans,
+      'employees' => $employees,
       'lastPage' => $data->lastPage(),
       'totalData' => $data->total(),
       'totalPage' => $data->perPage(),
@@ -30,10 +31,10 @@ class LoanController extends Controller{
     ];
   }
 
-  public function store(LoanStoreRequest $request){
+  public function store(EmployeeStoreRequest $request){
     try {
       DB::beginTransaction();
-      $data = $this->loanRepository->store($request->all());
+      $data = $this->employedRepository->store($request->all());
 
       $msg = 'agregado';
       $action = 'create';
@@ -54,9 +55,9 @@ class LoanController extends Controller{
   public function delete($id){
     try{
       DB::beginTransaction();
-      $data = $this->loanRepository->find($id);
+      $data = $this->employedRepository->find($id);
       if( $data ){
-        $this->loanRepository->delete($id);
+        $this->employedRepository->delete($id);
         $msg = 'Registro eliminado correctamente';
 
       }else{
@@ -74,7 +75,7 @@ class LoanController extends Controller{
   public function info($id){
     $aReturn = ['code' => 200];
     try{
-      $data = $this->loanRepository->find($id, [], ['id', 'name']);
+      $data = $this->employedRepository->find($id, [], ['id', 'name']);
       $aReturn['data'] = $data;
       if( $data ){
         $aReturn['message'] = 'El registro si existe';
@@ -99,7 +100,7 @@ class LoanController extends Controller{
       DB::beginTransaction();
       $nId = $request->input('id');
       $state = $request->input('state');
-      $model = $this->loanRepository->changeState($nId, $state, 'state');
+      $model = $this->employedRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';
 
@@ -114,4 +115,13 @@ class LoanController extends Controller{
     return response()->json($aReturn);
   }
 
+  public function select2InfiniteList(Request $request){
+    $data = $this->employedRepository->list(request: $request->all());
+    $employees = EmployeeListSelect2Resource::collection($data);
+
+    return [
+      'employees_arrayInfo' => $employees,
+      'employees_countLinks' => $data->lastPage(),
+    ];
+  }
 }

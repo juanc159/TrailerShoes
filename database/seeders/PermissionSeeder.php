@@ -67,6 +67,12 @@ class PermissionSeeder extends Seeder
                 'description' => 'Visualizar Ahorros',
                 'menu_id' => 9,
             ],
+            [
+                'id' => 10,
+                'name' => 'employee.index',
+                'description' => 'Visualizar Empleados',
+                'menu_id' => 10,
+            ],
         ];
         foreach ($arrayData as $key => $value) {
             $data = new Permission();

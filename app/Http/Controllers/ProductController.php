@@ -100,7 +100,6 @@ class ProductController extends Controller{
       DB::beginTransaction();
       $nId = $request->input('id');
       $state = $request->input('state');
-      $this->productRepository->find($request->input('id'));
       $model = $this->productRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';

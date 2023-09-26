@@ -99,7 +99,6 @@ class ThriftController extends Controller{
       DB::beginTransaction();
       $nId = $request->input('id');
       $state = $request->input('state');
-      $this->thriftRepository->find($request->input('id'));
       $model = $this->thriftRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';

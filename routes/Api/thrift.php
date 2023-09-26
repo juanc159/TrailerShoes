@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Loan
+| Thrift
 |--------------------------------------------------------------------------
 */
 Route::post('/thrift-list', [ThriftController::class, 'list'])->name('thrift.list');
