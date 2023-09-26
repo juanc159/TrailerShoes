@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Charge\ChargeStoreRequest;
-use App\Http\Resources\Charge\ChargeListResource;
-use App\Http\Resources\Charge\ChargeListSelect2Resource;
-use App\Repositories\ChargeRepository;
+use App\Http\Requests\Product\ProductStoreRequest;
+use App\Http\Resources\Product\ProductListResource;
+use App\Http\Resources\Product\ProductListSelect2Resource;
+use App\Repositories\ProductRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ChargeController extends Controller{
+class ProductController extends Controller{
 
-  private $chargeRepository;
+  private $productRepository;
 
-  public function __construct(ChargeRepository $chargeRepository){
-    $this->chargeRepository = $chargeRepository;
+  public function __construct(ProductRepository $productRepository){
+    $this->productRepository = $productRepository;
   }
 
   public function list(Request $request){
-    $data = $this->chargeRepository->list($request->all());
-    $charges = ChargeListResource::collection($data);
+    $data = $this->productRepository->list($request->all());
+    $products = ProductListResource::collection($data);
 
     return [
-      'charges' => $charges,
+      'products' => $products,
       'lastPage' => $data->lastPage(),
       'totalData' => $data->total(),
       'totalPage' => $data->perPage(),
@@ -31,11 +31,10 @@ class ChargeController extends Controller{
     ];
   }
 
-  public function store(ChargeStoreRequest $request){
+  public function store(ProductStoreRequest $request){
     try {
       DB::beginTransaction();
-       $this->chargeRepository->find($request->input("id"));
-      $data = $this->chargeRepository->store($request->all());
+      $data = $this->productRepository->store($request->all());
 
       $msg = 'agregado';
       $action = 'create';
@@ -56,9 +55,9 @@ class ChargeController extends Controller{
   public function delete($id){
     try{
       DB::beginTransaction();
-     $data = $this->chargeRepository->find($id);
+      $data = $this->productRepository->find($id);
       if( $data ){
-        $this->chargeRepository->delete($id);
+        $this->productRepository->delete($id);
         $msg = 'Registro eliminado correctamente';
 
       }else{
@@ -76,7 +75,7 @@ class ChargeController extends Controller{
   public function info($id){
     $aReturn = ['code' => 200];
     try{
-      $data = $this->chargeRepository->find($id, [], ['id', 'name']);
+      $data = $this->productRepository->find($id, [], ['id', 'name']);
       $aReturn['data'] = $data;
       if( $data ){
         $aReturn['message'] = 'El registro si existe';
@@ -101,8 +100,8 @@ class ChargeController extends Controller{
       DB::beginTransaction();
       $nId = $request->input('id');
       $state = $request->input('state');
-      $this->chargeRepository->find($request->input('id'));
-       $model = $this->chargeRepository->changeState($nId, $state, 'state');
+      $this->productRepository->find($request->input('id'));
+      $model = $this->productRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';
 
@@ -118,12 +117,12 @@ class ChargeController extends Controller{
   }
 
   public function select2InfiniteList(Request $request){
-    $data = $this->chargeRepository->list(request: $request->all());
-    $charges = ChargeListSelect2Resource::collection($data);
+    $data = $this->productRepository->list(request: $request->all());
+    $products = ProductListSelect2Resource::collection($data);
 
     return [
-      'charges_arrayInfo' => $charges,
-      'charges_countLinks' => $data->lastPage(),
+      'products_arrayInfo' => $products,
+      'products_countLinks' => $data->lastPage(),
     ];
   }
 }

@@ -39,8 +39,7 @@ class CompanyController extends Controller
         try {
 
             DB::beginTransaction();
-            $dataOld = $this->oCompanyRepository->find($request->input('id'));
-            $dataNew = $data = $this->oCompanyRepository->store($request);
+   $data = $this->oCompanyRepository->store($request);
 
             if ($request['id'] != 'null') {
                 $action = 'update';

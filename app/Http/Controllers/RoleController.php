@@ -47,7 +47,7 @@ class RoleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataNew = $this->roleRepository->find($request->input("id"));
+             $this->roleRepository->find($request->input("id"));
             $data = $this->roleRepository->store($request);
             DB::commit();
 
@@ -72,9 +72,9 @@ class RoleController extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataOld = $data = $this->roleRepository->find($id);
+            $data = $this->roleRepository->find($id);
             if ($data) {
-                $dataNew = $this->roleRepository->delete($id);
+                 $this->roleRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
             } else {
                 $msg = 'El registro no existe';

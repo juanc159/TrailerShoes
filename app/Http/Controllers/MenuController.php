@@ -35,7 +35,6 @@ class MenuController extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataOld = $this->companyRepository->find($request->input('id'));
 
             $data = $this->companyRepository->store($request);
 
@@ -62,9 +61,9 @@ class MenuController extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataOld = $data = $this->companyRepository->find($id);
+             $data = $this->companyRepository->find($id);
             if ($data) {
-                $dataNew = $this->companyRepository->delete($id);
+                 $this->companyRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
 
             } else {
