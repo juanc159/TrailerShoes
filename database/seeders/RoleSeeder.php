@@ -18,7 +18,7 @@ class RoleSeeder extends Seeder
                 'name' => 'Administrador',
                 'description' => 'Administrador',
                 'pageInitial' => 'Calendar-Index',
-                'permissions' => [1, 2, 3, 4, 5, 6],
+                'permissions' => [1, 2, 3, 4, 5, 6,7,8,9,10],
             ],
 
         ];

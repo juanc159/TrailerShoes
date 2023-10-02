@@ -65,7 +65,7 @@ class Usercontroller extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataOld = $this->userRepository->find($request->input("id"));
+            $this->userRepository->find($request->input("id"));
             $data = $this->userRepository->store($request->all());
 
             DB::commit();
@@ -89,11 +89,10 @@ class Usercontroller extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataOld = $data = $this->userRepository->find($id);
+            $data = $this->userRepository->find($id);
             if ($data) {
-                $dataNew = $this->userRepository->delete($id);
+                $this->userRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
-
             } else {
                 $msg = 'El registro no existe';
             }
@@ -154,7 +153,7 @@ class Usercontroller extends Controller
         try {
             DB::beginTransaction();
 
-            $dataOld = $this->userRepository->find($request->input('id'));
+            $this->userRepository->find($request->input('id'));
             $model = $this->userRepository->changeState($request->input('id'), $request->input('state'), 'state');
 
             ($model->state == 1) ? $msg = 'Activado' : $msg = 'Inactivado';

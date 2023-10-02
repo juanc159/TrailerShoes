@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Charge\ChargeStoreRequest;
-use App\Http\Resources\Charge\ChargeListResource;
-use App\Http\Resources\Charge\ChargeListSelect2Resource;
-use App\Repositories\ChargeRepository;
+use App\Http\Requests\Thrift\ThriftStoreRequest;
+use App\Http\Resources\Thrift\ThriftListResource;
+use App\Repositories\ThriftRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ChargeController extends Controller{
+class ThriftController extends Controller{
 
-  private $chargeRepository;
+  private $thriftRepository;
 
-  public function __construct(ChargeRepository $chargeRepository){
-    $this->chargeRepository = $chargeRepository;
+  public function __construct(ThriftRepository $thriftRepository){
+    $this->thriftRepository = $thriftRepository;
   }
 
   public function list(Request $request){
-    $data = $this->chargeRepository->list($request->all());
-    $charges = ChargeListResource::collection($data);
+    $data = $this->thriftRepository->list($request->all());
+    $thrifts = ThriftListResource::collection($data);
 
     return [
-      'charges' => $charges,
+      'thrifts' => $thrifts,
       'lastPage' => $data->lastPage(),
       'totalData' => $data->total(),
       'totalPage' => $data->perPage(),
@@ -31,11 +30,10 @@ class ChargeController extends Controller{
     ];
   }
 
-  public function store(ChargeStoreRequest $request){
+  public function store(ThriftStoreRequest $request){
     try {
       DB::beginTransaction();
-       $this->chargeRepository->find($request->input("id"));
-      $data = $this->chargeRepository->store($request->all());
+      $data = $this->thriftRepository->store($request->all());
 
       $msg = 'agregado';
       $action = 'create';
@@ -56,9 +54,9 @@ class ChargeController extends Controller{
   public function delete($id){
     try{
       DB::beginTransaction();
-     $data = $this->chargeRepository->find($id);
+      $data = $this->thriftRepository->find($id);
       if( $data ){
-        $this->chargeRepository->delete($id);
+        $this->thriftRepository->delete($id);
         $msg = 'Registro eliminado correctamente';
 
       }else{
@@ -76,7 +74,7 @@ class ChargeController extends Controller{
   public function info($id){
     $aReturn = ['code' => 200];
     try{
-      $data = $this->chargeRepository->find($id, [], ['id', 'name']);
+      $data = $this->thriftRepository->find($id, [], ['id', 'name']);
       $aReturn['data'] = $data;
       if( $data ){
         $aReturn['message'] = 'El registro si existe';
@@ -101,8 +99,7 @@ class ChargeController extends Controller{
       DB::beginTransaction();
       $nId = $request->input('id');
       $state = $request->input('state');
-      $this->chargeRepository->find($request->input('id'));
-       $model = $this->chargeRepository->changeState($nId, $state, 'state');
+      $model = $this->thriftRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';
 
@@ -117,13 +114,4 @@ class ChargeController extends Controller{
     return response()->json($aReturn);
   }
 
-  public function select2InfiniteList(Request $request){
-    $data = $this->chargeRepository->list(request: $request->all());
-    $charges = ChargeListSelect2Resource::collection($data);
-
-    return [
-      'charges_arrayInfo' => $charges,
-      'charges_countLinks' => $data->lastPage(),
-    ];
-  }
 }

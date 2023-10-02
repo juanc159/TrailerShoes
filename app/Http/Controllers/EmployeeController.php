@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Charge\ChargeStoreRequest;
-use App\Http\Resources\Charge\ChargeListResource;
-use App\Http\Resources\Charge\ChargeListSelect2Resource;
-use App\Repositories\ChargeRepository;
+use App\Http\Requests\Employee\EmployeeStoreRequest;
+use App\Http\Resources\Employee\EmployeeListResource;
+use App\Http\Resources\Employee\EmployeeListSelect2Resource;
+use App\Repositories\EmployeeRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ChargeController extends Controller{
+class EmployeeController extends Controller{
 
-  private $chargeRepository;
+  private $employedRepository;
 
-  public function __construct(ChargeRepository $chargeRepository){
-    $this->chargeRepository = $chargeRepository;
+  public function __construct(EmployeeRepository $employedRepository){
+    $this->employedRepository = $employedRepository;
   }
 
   public function list(Request $request){
-    $data = $this->chargeRepository->list($request->all());
-    $charges = ChargeListResource::collection($data);
+    $data = $this->employedRepository->list($request->all());
+    $employees = EmployeeListResource::collection($data);
 
     return [
-      'charges' => $charges,
+      'employees' => $employees,
       'lastPage' => $data->lastPage(),
       'totalData' => $data->total(),
       'totalPage' => $data->perPage(),
@@ -31,11 +31,10 @@ class ChargeController extends Controller{
     ];
   }
 
-  public function store(ChargeStoreRequest $request){
+  public function store(EmployeeStoreRequest $request){
     try {
       DB::beginTransaction();
-       $this->chargeRepository->find($request->input("id"));
-      $data = $this->chargeRepository->store($request->all());
+      $data = $this->employedRepository->store($request->all());
 
       $msg = 'agregado';
       $action = 'create';
@@ -56,9 +55,9 @@ class ChargeController extends Controller{
   public function delete($id){
     try{
       DB::beginTransaction();
-     $data = $this->chargeRepository->find($id);
+      $data = $this->employedRepository->find($id);
       if( $data ){
-        $this->chargeRepository->delete($id);
+        $this->employedRepository->delete($id);
         $msg = 'Registro eliminado correctamente';
 
       }else{
@@ -76,7 +75,7 @@ class ChargeController extends Controller{
   public function info($id){
     $aReturn = ['code' => 200];
     try{
-      $data = $this->chargeRepository->find($id, [], ['id', 'name']);
+      $data = $this->employedRepository->find($id, [], ['id', 'name']);
       $aReturn['data'] = $data;
       if( $data ){
         $aReturn['message'] = 'El registro si existe';
@@ -101,8 +100,7 @@ class ChargeController extends Controller{
       DB::beginTransaction();
       $nId = $request->input('id');
       $state = $request->input('state');
-      $this->chargeRepository->find($request->input('id'));
-       $model = $this->chargeRepository->changeState($nId, $state, 'state');
+      $model = $this->employedRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';
 
@@ -118,12 +116,12 @@ class ChargeController extends Controller{
   }
 
   public function select2InfiniteList(Request $request){
-    $data = $this->chargeRepository->list(request: $request->all());
-    $charges = ChargeListSelect2Resource::collection($data);
+    $data = $this->employedRepository->list(request: $request->all());
+    $employees = EmployeeListSelect2Resource::collection($data);
 
     return [
-      'charges_arrayInfo' => $charges,
-      'charges_countLinks' => $data->lastPage(),
+      'employees_arrayInfo' => $employees,
+      'employees_countLinks' => $data->lastPage(),
     ];
   }
 }

@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Charge\ChargeStoreRequest;
-use App\Http\Resources\Charge\ChargeListResource;
-use App\Http\Resources\Charge\ChargeListSelect2Resource;
-use App\Repositories\ChargeRepository;
+use App\Http\Requests\Loan\LoanStoreRequest;
+use App\Http\Resources\Loan\LoanListResource;
+use App\Repositories\LoanRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ChargeController extends Controller{
+class LoanController extends Controller{
 
-  private $chargeRepository;
+  private $loanRepository;
 
-  public function __construct(ChargeRepository $chargeRepository){
-    $this->chargeRepository = $chargeRepository;
+  public function __construct(LoanRepository $loanRepository){
+    $this->loanRepository = $loanRepository;
   }
 
   public function list(Request $request){
-    $data = $this->chargeRepository->list($request->all());
-    $charges = ChargeListResource::collection($data);
+    $data = $this->loanRepository->list($request->all());
+    $loans = LoanListResource::collection($data);
 
     return [
-      'charges' => $charges,
+      'loans' => $loans,
       'lastPage' => $data->lastPage(),
       'totalData' => $data->total(),
       'totalPage' => $data->perPage(),
@@ -31,11 +30,10 @@ class ChargeController extends Controller{
     ];
   }
 
-  public function store(ChargeStoreRequest $request){
+  public function store(LoanStoreRequest $request){
     try {
       DB::beginTransaction();
-       $this->chargeRepository->find($request->input("id"));
-      $data = $this->chargeRepository->store($request->all());
+      $data = $this->loanRepository->store($request->all());
 
       $msg = 'agregado';
       $action = 'create';
@@ -56,9 +54,9 @@ class ChargeController extends Controller{
   public function delete($id){
     try{
       DB::beginTransaction();
-     $data = $this->chargeRepository->find($id);
+      $data = $this->loanRepository->find($id);
       if( $data ){
-        $this->chargeRepository->delete($id);
+        $this->loanRepository->delete($id);
         $msg = 'Registro eliminado correctamente';
 
       }else{
@@ -76,7 +74,7 @@ class ChargeController extends Controller{
   public function info($id){
     $aReturn = ['code' => 200];
     try{
-      $data = $this->chargeRepository->find($id, [], ['id', 'name']);
+      $data = $this->loanRepository->find($id, [], ['id', 'name']);
       $aReturn['data'] = $data;
       if( $data ){
         $aReturn['message'] = 'El registro si existe';
@@ -101,8 +99,7 @@ class ChargeController extends Controller{
       DB::beginTransaction();
       $nId = $request->input('id');
       $state = $request->input('state');
-      $this->chargeRepository->find($request->input('id'));
-       $model = $this->chargeRepository->changeState($nId, $state, 'state');
+      $model = $this->loanRepository->changeState($nId, $state, 'state');
 
       ($model->state == 1) ? $aReturn['msg'] = 'Activado' : $aReturn['msg'] = 'Inactivado';
 
@@ -117,13 +114,4 @@ class ChargeController extends Controller{
     return response()->json($aReturn);
   }
 
-  public function select2InfiniteList(Request $request){
-    $data = $this->chargeRepository->list(request: $request->all());
-    $charges = ChargeListSelect2Resource::collection($data);
-
-    return [
-      'charges_arrayInfo' => $charges,
-      'charges_countLinks' => $data->lastPage(),
-    ];
-  }
 }

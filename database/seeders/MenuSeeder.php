@@ -50,10 +50,38 @@ class MenuSeeder extends Seeder
             ],
             [
                 'id' => 6,
-                'title' => 'Empresas',
+                'title' => 'Empresa',
                 'to' => 'Companies-Index',
-                'icon' => 'mdi-domain',
+                'icon' => 'mdi-arrow-right-thin-circle-outline',
                 'requiredPermission' => 'companies.index',
+            ],
+            [
+                'id' => 7,
+                'title' => 'Productos',
+                'to' => 'Product-Index',
+                'icon' => 'mdi-arrow-right-thin-circle-outline',
+                'requiredPermission' => 'product.index',
+            ],
+            [
+                'id' => 8,
+                'title' => 'Prestamos',
+                'to' => 'Loan-Index',
+                'icon' => 'mdi-arrow-right-thin-circle-outline',
+                'requiredPermission' => 'loan.index',
+            ],
+            [
+                'id' => 9,
+                'title' => 'Ahorros',
+                'to' => 'Thrift-Index',
+                'icon' => 'mdi-arrow-right-thin-circle-outline',
+                'requiredPermission' => 'thrift.index',
+            ],
+            [
+                'id' => 10,
+                'title' => 'Empelados',
+                'to' => 'Employee-Index',
+                'icon' => 'mdi-arrow-right-thin-circle-outline',
+                'requiredPermission' => 'employee.index',
             ],
         ];
         foreach ($arrayData as $key => $value) {

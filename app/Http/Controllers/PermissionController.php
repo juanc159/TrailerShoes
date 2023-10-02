@@ -41,7 +41,6 @@ class PermissionController extends Controller
 
         try {
             DB::beginTransaction();
-            $dataOld = $this->permissionRepository->find($request->input("id"));
             $data = $this->permissionRepository->store($request);
             DB::commit();
 
@@ -66,9 +65,9 @@ class PermissionController extends Controller
     {
         try {
             DB::beginTransaction();
-            $dataOld = $data = $this->permissionRepository->find($id);
+             $data = $this->permissionRepository->find($id);
             if ($data) {
-                $dataNew = $this->permissionRepository->delete($id);
+                 $this->permissionRepository->delete($id);
                 $msg = 'Registro eliminado correctamente';
             } else {
                 $msg = 'El registro no existe';
