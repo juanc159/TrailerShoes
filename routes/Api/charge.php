@@ -13,6 +13,6 @@ Route::post('/charge-create', [ChargeController::class, 'store'])->name('charge.
 Route::put('/charge-update', [ChargeController::class, 'store'])->name('charge.update');
 Route::delete('/charge-delete/{id}', [ChargeController::class, 'delete'])->name('charge.delete');
 Route::get('/charge-info/{id}', [ChargeController::class, 'info'])->name('charge.info');
-Route::post('/charge-dataForm', [ChargeController::class, 'dataForm'])->name('charge.dataForm');
+Route::get('/charge-dataForm', [ChargeController::class, 'dataForm'])->name('charge.dataForm');
 Route::post('/charge-changeState', [ChargeController::class, 'changeState'])->name('charge.changeState');
 Route::post('/charge-select2InfiniteList', [ChargeController::class, 'select2InfiniteList'])->name('charge.select2InfiniteList');

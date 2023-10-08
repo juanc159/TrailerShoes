@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Charge;
+use App\Models\Area;
 
-class ChargeRepository extends BaseRepository
+class AreaRepository extends BaseRepository
 {
-    public function __construct(Charge $modelo)
+    public function __construct(Area $modelo)
     {
         parent::__construct($modelo);
     }
@@ -59,19 +59,6 @@ class ChargeRepository extends BaseRepository
             $data[$key] = $request[$key];
         }
         $data->save();
-
-        return $data;
-    }
-
-
-    public function selectList($request = [])
-    {
-        $data = $this->model->get()->map(function ($value) {
-            return  [
-                "value" => $value->id,
-                "title" => $value->name,
-            ];
-        });
 
         return $data;
     }

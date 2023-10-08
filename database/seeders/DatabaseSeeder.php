@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             UserSeeder::class,
             CompanySeeder::class,
+            AreaSeeder::class,
+            ChargeSeeder::class,
+            // EmployeeSeeder::class,
         ]);
     }
 }

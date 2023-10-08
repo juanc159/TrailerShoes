@@ -6,6 +6,7 @@ use App\Http\Requests\Employee\EmployeeStoreRequest;
 use App\Http\Resources\Employee\EmployeeListResource;
 use App\Http\Resources\Employee\EmployeeListSelect2Resource;
 use App\Repositories\EmployeeRepository;
+use App\Repositories\ChargeRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,13 +14,19 @@ use Illuminate\Support\Facades\DB;
 class EmployeeController extends Controller{
 
   private $employedRepository;
+  private $chargeRepository;
 
-  public function __construct(EmployeeRepository $employedRepository){
+  public function __construct(
+    EmployeeRepository $employedRepository,
+    ChargeRepository $chargeRepository
+  ){
     $this->employedRepository = $employedRepository;
+    $this->chargeRepository = $chargeRepository;
   }
 
+  
   public function list(Request $request){
-    $data = $this->employedRepository->list($request->all());
+    $data = $this->employedRepository->list($request->all(), ["charge"]);
     $employees = EmployeeListResource::collection($data);
 
     return [
@@ -75,7 +82,7 @@ class EmployeeController extends Controller{
   public function info($id){
     $aReturn = ['code' => 200];
     try{
-      $data = $this->employedRepository->find($id, [], ['id', 'name']);
+      $data = $this->employedRepository->find($id, []);
       $aReturn['data'] = $data;
       if( $data ){
         $aReturn['message'] = 'El registro si existe';
@@ -89,9 +96,10 @@ class EmployeeController extends Controller{
     return response()->json($aReturn, $aReturn['code']);
   }
 
-  public function dataForm(Request $request){
-    $request['typeData'] = 'todos';
-    return response()->json([]);
+  public function dataForm(){
+    return response()->json([
+      "charges" => $this->chargeRepository->selectList()
+    ]);
   }
 
   public function changeState(Request $request){

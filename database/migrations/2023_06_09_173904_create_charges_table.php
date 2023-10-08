@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('charges', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('area_id')->nullable()->constrained('areas');
             $table->string('name');
             $table->boolean('state')->default(1);
             $table->timestamps();
