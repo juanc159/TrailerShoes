@@ -70,14 +70,14 @@ class MenuSeeder extends Seeder
                 'requiredPermission' => 'loan.index',
             ],
             [
-                'id' => 10,
+                'id' => 9,
                 'title' => 'Ahorros',
                 'to' => 'Thrift-Index',
                 'icon' => 'mdi-cash-lock',
                 'requiredPermission' => 'thrift.index',
             ],
             [
-                'id' => 11,
+                'id' => 10,
                 'title' => 'Empleados',
                 'to' => 'Employee-Index',
                 'icon' => 'mdi-briefcase-outline',
