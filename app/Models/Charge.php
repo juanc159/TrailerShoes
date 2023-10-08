@@ -15,6 +15,11 @@ class Charge extends Model
         return $this->hasMany(User::class, 'charge_id', 'id');
     }
 
+    public function area()
+    {
+        return $this->hasOne(Area::class, 'id', 'area_id');
+    }
+
     public function requirementTypes()
     {
         return $this->belongsToMany(RequirementType::class, 'requirement_type_charges', 'requirement_type_id', 'charge_id');

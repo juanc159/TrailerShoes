@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Charge;
+use App\Models\Area;
 
-class ChargeRepository extends BaseRepository
+class AreaRepository extends BaseRepository
 {
-    public function __construct(Charge $modelo)
+    public function __construct(Area $modelo)
     {
         parent::__construct($modelo);
     }

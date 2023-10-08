@@ -70,19 +70,11 @@ class MenuSeeder extends Seeder
                 'requiredPermission' => 'loan.index',
             ],
             [
-                'id' => 9,
-                'title' => 'Configuración',
-                'to' => 'Loan-Index',
-                'icon' => 'mdi-cog',
-                'requiredPermission' => 'config.index',
-            ],
-            [
                 'id' => 10,
                 'title' => 'Ahorros',
                 'to' => 'Thrift-Index',
                 'icon' => 'mdi-cash-lock',
                 'requiredPermission' => 'thrift.index',
-                'father' => 9
             ],
             [
                 'id' => 11,
@@ -90,7 +82,6 @@ class MenuSeeder extends Seeder
                 'to' => 'Employee-Index',
                 'icon' => 'mdi-briefcase-outline',
                 'requiredPermission' => 'employee.index',
-                'father' => 9
             ],
         ];
         foreach ($arrayData as $key => $value) {

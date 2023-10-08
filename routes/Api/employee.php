@@ -13,6 +13,7 @@ Route::post('/employee-create', [EmployeeController::class, 'store'])->name('emp
 Route::put('/employee-update', [EmployeeController::class, 'store'])->name('employee.update');
 Route::delete('/employee-delete/{id}', [EmployeeController::class, 'delete'])->name('employee.delete');
 Route::get('/employee-info/{id}', [EmployeeController::class, 'info'])->name('employee.info');
+Route::get('/employee-dataForm', [EmployeeController::class, 'dataForm'])->name('employee.dataForm');
 Route::post('/employee-dataForm', [EmployeeController::class, 'dataForm'])->name('employee.dataForm');
 Route::post('/employee-changeState', [EmployeeController::class, 'changeState'])->name('employee.changeState');
 Route::post('/employee-select2InfiniteList', [EmployeeController::class, 'select2InfiniteList'])->name('employee.select2InfiniteList');

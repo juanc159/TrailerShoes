@@ -6,6 +6,7 @@ use App\Http\Requests\Charge\ChargeStoreRequest;
 use App\Http\Resources\Charge\ChargeListResource;
 use App\Http\Resources\Charge\ChargeListSelect2Resource;
 use App\Repositories\ChargeRepository;
+use App\Repositories\AreaRepository;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,13 +14,18 @@ use Illuminate\Support\Facades\DB;
 class ChargeController extends Controller{
 
   private $chargeRepository;
+  private $areaRepository;
 
-  public function __construct(ChargeRepository $chargeRepository){
+  public function __construct(
+    ChargeRepository $chargeRepository,
+    AreaRepository $areaRepository
+    ){
     $this->chargeRepository = $chargeRepository;
+    $this->areaRepository = $areaRepository;
   }
 
   public function list(Request $request){
-    $data = $this->chargeRepository->list($request->all());
+    $data = $this->chargeRepository->list($request->all(), ["area"]);
     $charges = ChargeListResource::collection($data);
 
     return [
@@ -76,7 +82,7 @@ class ChargeController extends Controller{
   public function info($id){
     $aReturn = ['code' => 200];
     try{
-      $data = $this->chargeRepository->find($id, [], ['id', 'name']);
+      $data = $this->chargeRepository->find($id, []);
       $aReturn['data'] = $data;
       if( $data ){
         $aReturn['message'] = 'El registro si existe';
@@ -91,8 +97,9 @@ class ChargeController extends Controller{
   }
 
   public function dataForm(Request $request){
-    $request['typeData'] = 'todos';
-    return response()->json([]);
+    return response()->json([
+      "areas" => $this->areaRepository->selectList()
+    ]);
   }
 
   public function changeState(Request $request){

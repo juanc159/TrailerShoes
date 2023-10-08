@@ -65,19 +65,19 @@ class PermissionSeeder extends Seeder
                 'id' => 9,
                 'name' => 'thrift.index',
                 'description' => 'Visualizar Ahorros',
-                'menu_id' => 10,
+                'menu_id' => 9,
             ],
             [
                 'id' => 10,
                 'name' => 'employee.index',
                 'description' => 'Visualizar Empleados',
-                'menu_id' => 11,
+                'menu_id' => 10,
             ],
             [
                 'id' => 11,
                 'name' => 'config.index',
                 'description' => 'Menu padre configuracion',
-                'menu_id' => 9,
+                'menu_id' => 10,
             ],
         ];
         foreach ($arrayData as $key => $value) {
