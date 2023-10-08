@@ -73,9 +73,22 @@ class PermissionSeeder extends Seeder
                 'description' => 'Visualizar Empleados',
                 'menu_id' => 10,
             ],
+            [
+                'id' => 11,
+                'name' => 'style.index',
+                'description' => 'Visualizar Estilos',
+                'menu_id' => 11,
+            ],
+            [
+                'id' => 12,
+                'name' => 'production.index',
+                'description' => 'Visualizar Produccción',
+                'menu_id' => 12,
+            ],
         ];
         foreach ($arrayData as $key => $value) {
             $data = new Permission();
+            $data->id = $value['id'];
             $data->name = $value['name'];
             $data->description = $value['description'];
             $data->menu_id = $value['menu_id'];

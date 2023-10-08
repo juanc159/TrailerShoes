@@ -83,6 +83,20 @@ class MenuSeeder extends Seeder
                 'icon' => 'mdi-arrow-right-thin-circle-outline',
                 'requiredPermission' => 'employee.index',
             ],
+            [
+                'id' => 11,
+                'title' => 'Estilos',
+                'to' => 'Style-Index',
+                'icon' => 'mdi-arrow-right-thin-circle-outline',
+                'requiredPermission' => 'style.index',
+            ],
+            [
+                'id' => 12,
+                'title' => 'Producción',
+                'to' => 'Production-Index',
+                'icon' => 'mdi-arrow-right-thin-circle-outline',
+                'requiredPermission' => 'production.index',
+            ],
         ];
         foreach ($arrayData as $key => $value) {
             $data = new Menu();

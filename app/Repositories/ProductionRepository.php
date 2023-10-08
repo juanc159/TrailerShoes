@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Employee;
+use App\Models\Production;
 
-class EmployeeRepository extends BaseRepository
+class ProductionRepository extends BaseRepository
 {
-    public function __construct(Employee $modelo)
+    public function __construct(Production $modelo)
     {
         parent::__construct($modelo);
     }
@@ -14,16 +14,16 @@ class EmployeeRepository extends BaseRepository
     public function list($request = [], $with = [], $select = ['*'])
     {
         $data = $this->model->select($select)->with($with)->where(function ($query) use ($request) {
-            if (! empty($request['name'])) {
-                $query->where('name', 'like', '%'.$request['name'].'%');
+            if (!empty($request['name'])) {
+                $query->where('name', 'like', '%' . $request['name'] . '%');
             }
-            if (! empty($request['state'])) {
+            if (!empty($request['state'])) {
                 $query->where('state', $request['state']);
             }
         })
             ->where(function ($query) use ($request) {
-                if (! empty($request['searchQuery'])) {
-                    $query->orWhere('name', 'like', '%'.$request['searchQuery'].'%');
+                if (!empty($request['searchQuery'])) {
+                    $query->orWhere('name', 'like', '%' . $request['searchQuery'] . '%');
                 }
             })
             ->orderBy($request['sort_field'] ?? 'id', $request['sort_direction'] ?? 'asc');
@@ -39,7 +39,7 @@ class EmployeeRepository extends BaseRepository
 
     public function store($request)
     {
-        if (! empty($request['id'])) {
+        if (!empty($request['id'])) {
             $data = $this->model->find($request['id']);
         } else {
             $data = $this->model::newModelInstance();

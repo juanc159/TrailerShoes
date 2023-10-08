@@ -43,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
             base_path('routes/Api/loan.php'),
             base_path('routes/Api/thrift.php'),
             base_path('routes/Api/employee.php'),
+            base_path('routes/Api/style.php'),
+            base_path('routes/Api/production.php'),
         ];
 
         $this->routes(function () use ($routesAuthApi, $routesApi) {

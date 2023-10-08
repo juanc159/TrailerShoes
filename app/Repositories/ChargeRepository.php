@@ -52,4 +52,17 @@ class ChargeRepository extends BaseRepository
 
         return $data;
     }
+
+
+    public function selectList($request = [])
+    {
+        $data = $this->model->get()->map(function ($value) {
+            return  [
+                "value" => $value->id,
+                "title" => $value->name,
+            ];
+        });
+
+        return $data;
+    }
 }
