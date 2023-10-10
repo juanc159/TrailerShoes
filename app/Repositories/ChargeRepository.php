@@ -37,15 +37,6 @@ class ChargeRepository extends BaseRepository
         return $data;
     }
 
-    public function selectList()
-    {
-        return $this->model->get()->map(function ($val) {
-            return [
-                'value' => $val->id,
-                'label' => $val->name,
-            ];
-        });
-    }
 
     public function store($request)
     {
