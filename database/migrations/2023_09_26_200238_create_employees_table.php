@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->string("last_name");
             $table->string("number_identification");
-            $table->foreignId('charge_id')->nullable()->constrained('charges');
+            $table->foreignId('charge_id')->nullable()->constrained('chargessss');
             $table->string("phone");
             $table->integer("indicator");
             $table->timestamps();
