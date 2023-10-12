@@ -47,9 +47,10 @@ class Usercontroller extends Controller
         $this->civilStatusRepository = $civilStatusRepository;
     }
 
+
     public function list(Request $request)
     {
-        $data = $this->userRepository->list($request->all(), ['role']);
+        return $data = $this->userRepository->list($request->all(), ['role']);
         $user = UserListResource::collection($data);
 
         return [

@@ -26,7 +26,7 @@ class MenuSeeder extends Seeder
                 'to' => 'Role-Index',
                 'icon' => 'mdi-lock-off-outline',
                 'requiredPermission' => 'role.index',
-            ], 
+            ],
             [
                 'id' => 3,
                 'title' => 'Menu',
