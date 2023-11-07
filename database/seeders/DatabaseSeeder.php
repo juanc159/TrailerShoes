@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             AreaSeeder::class,
             ChargeSeeder::class,
-            // EmployeeSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }
