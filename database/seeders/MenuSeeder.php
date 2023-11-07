@@ -97,6 +97,15 @@ class MenuSeeder extends Seeder
                 'icon' => 'mdi-arrow-right-thin-circle-outline',
                 'requiredPermission' => 'production.index',
             ],
+            [
+                'id' => 13,
+                'title' => 'Vouchers',
+                'to' => 'Vouchers-Index',
+                'icon' => 'mdi-ticket-percent-outline',
+                'requiredPermission' => 'vouchers.index',
+                'father' => 12,
+            ],
+            
         ];
         foreach ($arrayData as $key => $value) {
             $data = new Menu();

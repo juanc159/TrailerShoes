@@ -85,6 +85,12 @@ class PermissionSeeder extends Seeder
                 'description' => 'Visualizar Produccción',
                 'menu_id' => 12,
             ],
+            [
+                'id' => 13,
+                'name' => 'vouchers.index',
+                'description' => 'Crear Vouchers',
+                'menu_id' => 13,
+            ],
         ];
         foreach ($arrayData as $key => $value) {
             $data = new Permission();
